@@ -1,0 +1,8 @@
+<ul class="pull-right" id="navbar">
+  <% if @authuser %>
+    Welcome, <a href="/user/<%=@authuser.name%>"><%=@authuser.name%></a>. <a href="/logout">Log out?</a>
+  <% else %>
+    Have an account? <a href="/login">Log in</a> or <a href="/signup">Sign up</a>
+  <% end %>
+
+</ul>

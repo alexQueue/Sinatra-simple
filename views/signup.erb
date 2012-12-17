@@ -1,0 +1,22 @@
+<form id="signup-form" action="/signup" method="POST">
+  <ul style="list-style: none;">
+  <li> <input type="text" name="name" placeholder="Username"> </li>
+  <li> <input type="password" id="signup-pass" name="password" placeholder = "Password"> </li>
+  <li> <input type="password" id="signup-pass-confirm" name="confirm_password" placeholder="Confirm password"> </li>
+  <li> <button id="signup-submit" type="button">Sign up</button> </li>
+  <!-- <input id="signup-submit" type="submit" value="Log in"> -->
+</form>
+
+<script>
+  
+  $("#signup-submit").click(function() {
+    if ( $("#signup-pass").val() == $("#signup-pass-confirm").val() ) {
+      $("#signup-form").submit();
+    } else {
+      alert("Password and password confirmation must match");
+    }
+
+  });
+
+</script>
+  
