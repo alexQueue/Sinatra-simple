@@ -1,7 +1,7 @@
 helpers do
   require 'digest/sha2'
   include Rack::Utils
-  
+
   alias_method :h, :escape_html
 
   # Useful things I tend to use
@@ -39,7 +39,7 @@ helpers do
   def get_login
     id = request.cookies["login_id"]
     hash = request.cookies["login_hash"]
-    
+
     if login_hash(id) == hash
       id
     else
@@ -55,20 +55,12 @@ helpers do
   def logged_in_user
     id = request.cookies["login_id"]
     hash = request.cookies["login_hash"]
-    
+
     if login_hash(id) == hash
-      User.first(:id => id)
+      User.first(:id => id.to_i)
     else
       nil
     end
-  end
-
-  def password_hash(salt, password)
-     Digest::SHA2.hexdigest(salt + password + " Unique salt 3").to_s
-  end
-
-  def verify_pass(user, password) 
-    user.password == password_hash(user.salt, password)
   end
 
 end

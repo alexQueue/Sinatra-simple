@@ -10,7 +10,8 @@ if development?
 end
 
 before do
-  @authuser = User.get get_login
+  p logged_in_user
+  @authuser = logged_in_user#User.get get_login
 
   p 'page loading: ' + request.fullpath
   if @authuser
@@ -38,6 +39,13 @@ end
 
 # User Auth ####
 
+get '/test' do
+  p 'Authuser: '
+  p @authuser
+  p logged_in_user
+  "#{@authuser}"#"#{@authuser.try(:id)}"
+end
+
 get "/logout" do
   logout
   redirect '/'
@@ -51,12 +59,8 @@ get "/login" do
   erb :login
 end
 
-post "/signup" do 
-  salt = Time.now.to_s
-  u = User.create(:name => params[:name],
-              :salt => salt, 
-              :password => password_hash(salt, params[:password])
-              )
+post "/signup" do
+  u = User.create(:name => params[:name], raw_password: params[:password])
   if u.saved?
     login u.id
     redirect '/'
@@ -70,7 +74,7 @@ end
 
 post "/login" do
   u = User.first(:name_lower => params[:name].downcase)
-  if u and verify_pass(u, params[:password])
+  if u and u.verify_pass(params[:password])
     login(u.id)
     redirect '/'
   elsif u

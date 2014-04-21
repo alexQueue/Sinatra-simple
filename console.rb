@@ -1,4 +1,13 @@
-require 'bundler'
-Bundler.require
+#require 'bundler'
+#Bundler.require
+# To use:
+# $ irb
+# $ require './console.rb'
 
-require './models.rb'
+def development?
+  true
+end
+
+require './models/models.rb'
+require 'sinatra'
+require './helpers/helpers'
